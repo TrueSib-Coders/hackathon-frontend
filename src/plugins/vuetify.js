@@ -12,7 +12,7 @@ const vuetify = {
         secondary: '#262c40',
         accent: '#0d356c',
         error: '#c84f4f',
-        info: '#7c8793',
+        info: '#508be2',
         success: '#65cc7B',
         warning: '#f5984e',
       },

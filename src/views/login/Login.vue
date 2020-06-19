@@ -66,7 +66,7 @@ class ViewLogin extends Vue {
   display: flex
   align-items: center
   justify-content: center
-  height: 100vh
+  height: 100%
 
   &__form
     width: 100%
