@@ -1,25 +1,27 @@
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
-import ru from 'vuetify/es5/locale/ru'
+import Vue from 'vue';
+import Vuetify from 'vuetify/lib';
+import ru from 'vuetify/es5/locale/ru';
 
-Vue.use(Vuetify)
+Vue.use(Vuetify);
 
-export default new Vuetify({
+const vuetify = {
   theme: {
     themes: {
       light: {
-        primary: '#262C40',
-        secondary: '#0057B6',
-        accent: '#0D356C',
-        error: '#C84F4F',
-        info: '#E1F5E5',
-        success: '#65CC7B',
-        warning: '#F5984E'
-      }
-    }
+        primary: '#0057b6',
+        secondary: '#262c40',
+        accent: '#0d356c',
+        error: '#c84f4f',
+        info: '#7c8793',
+        success: '#65cc7B',
+        warning: '#f5984e',
+      },
+    },
   },
   lang: {
     locales: { ru },
-    current: 'ru'
-  }
-})
+    current: 'ru',
+  },
+};
+
+export default new Vuetify(vuetify);

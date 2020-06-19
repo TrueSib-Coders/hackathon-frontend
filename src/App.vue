@@ -1,14 +1,102 @@
 <template lang="pug">
-div asd
+v-app.app
+  v-navigation-drawer.app__nav(
+    v-model="drawer"
+    app
+  )
+    v-list(dense)
+      router-link.app__link(to="/")
+        v-list-item(link)
+          v-list-item-action
+            v-icon mdi-home
+          v-list-item-content
+            v-list-item-title Главная
+      router-link.app__link(to="/news")
+        v-list-item(link)
+          v-list-item-action
+            v-icon mdi-newspaper-variant
+          v-list-item-content
+            v-list-item-title Новости
+      router-link.app__link(to="/profile")
+        v-list-item(link)
+          v-list-item-action
+            v-icon mdi-account
+          v-list-item-content
+            v-list-item-title Профиль
+      hr.app__hr
+      button.app__link(@click="logout")
+        v-list-item(link)
+          v-list-item-action
+            v-icon mdi-logout-variant
+          v-list-item-content
+            v-list-item-title Выход
+
+  v-app-bar(
+    app
+    color="primary"
+    dark
+  )
+    v-app-bar-nav-icon(
+      v-if="authorized"
+      @click.stop="drawer = !drawer"
+    )
+    v-toolbar-title Application
+
+  v-main
+    router-view
+  v-footer(
+    color="secondary"
+    app
+  )
+    span(class="white--text") &copy; 2020
+  Alert
 </template>
 
 <script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
+import { Alert } from '@/components';
+
 export default
-@Component({})
-class App extends Vue {}
+@Component({
+  components: {
+    Alert,
+  },
+})
+class App extends Vue {
+  drawer = false;
+
+  get authorized() {
+    const result = this.$store.state.auth;
+    this.drawer = result;
+    return result;
+  }
+
+  logout() {
+    this.$store.dispatch('logout').then(() => {
+      this.$router.push('/login');
+    });
+  }
+}
 </script>
 
-<style lang="stylus" scoped></style>
+<style lang="stylus">
+@import './stylus/fonts.styl'
+
+*
+  font-family: "Proxima"
+
+.app
+  &__link
+    width: 100%
+    text-align: left
+    display: block
+    text-decoration: none
+    &:hover, &:focus
+      text-decoration: none
+
+  &__hr
+    border-top: 1px solid rgba(0, 0, 0, 0.12)
+    border-bottom: none
+</style>
