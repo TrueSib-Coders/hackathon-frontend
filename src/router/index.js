@@ -11,6 +11,12 @@ const ViewLogin = () =>
 const ViewMain = () =>
   import('../views/main/Main.vue' /* webpackChunkName: "login" */);
 
+const ViewNews = () =>
+  import('../views/news/News.vue' /* webpackChunkName: "login" */);
+
+const ViewProfile = () =>
+  import('../views/profile/Profile.vue' /* webpackChunkName: "login" */);
+
 const routes = [
   {
     path: '/login',
@@ -27,13 +33,13 @@ const routes = [
   {
     path: '/news',
     name: 'news',
-    component: ViewMain,
+    component: ViewNews,
     meta: { name: 'Новости', requiresAuth: true },
   },
   {
     path: '/profile',
     name: 'profile',
-    component: ViewMain,
+    component: ViewProfile,
     meta: { name: 'Профиль', requiresAuth: true },
   },
   {
@@ -56,8 +62,9 @@ router.beforeEach((to, from, next) => {
   } else {
     if (to.matched.some(record => record.meta.requiresAuth)) {
       next({ path: '/login' });
+    } else {
+      next();
     }
-    next();
   }
 });
 
