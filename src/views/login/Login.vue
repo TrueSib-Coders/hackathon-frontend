@@ -49,7 +49,7 @@ class ViewLogin extends Vue {
     ],
   };
 
-  submit () {
+  submit() {
     const { valid, login, pass, $router, $store } = this;
     const data = { login, pass };
     if (valid) {
@@ -73,6 +73,11 @@ class ViewLogin extends Vue {
     padding: 20px
     max-width: 320px
     margin: auto
+    display: flex
+    flex-direction: column
+    justify-content: center
+    > *
+      width: 100%
 
   &__btn
     margin-top: 8px

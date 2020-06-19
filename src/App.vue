@@ -40,15 +40,16 @@ v-app.app
       v-if="authorized"
       @click.stop="drawer = !drawer"
     )
-    v-toolbar-title Application
+    v-toolbar-title
+      Logo(color="white")
 
   v-main
-    router-view
+    router-view.app__content
   v-footer(
     color="secondary"
     app
   )
-    span(class="white--text") &copy; 2020
+    span(class="white--text") TrueSib Coders &copy; 2020
   Alert
 </template>
 
@@ -56,12 +57,13 @@ v-app.app
 import Vue from 'vue';
 import Component from 'vue-class-component';
 
-import { Alert } from '@/components';
+import { Alert, Logo } from '@/components';
 
 export default
 @Component({
   components: {
     Alert,
+    Logo,
   },
 })
 class App extends Vue {
@@ -99,4 +101,7 @@ class App extends Vue {
   &__hr
     border-top: 1px solid rgba(0, 0, 0, 0.12)
     border-bottom: none
+
+  &__content
+    padding: 16px
 </style>
