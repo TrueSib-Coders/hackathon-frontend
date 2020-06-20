@@ -24,7 +24,6 @@ import Vue from 'vue';
 import Component from 'vue-class-component';
 
 import { PostsList } from '@/components';
-import checkMobile from '@/mixins';
 
 export default
 @Component({
@@ -41,7 +40,6 @@ export default
       default: false,
     },
   },
-  mixins: [checkMobile],
 })
 class MainTab extends Vue {
   get items() {
@@ -57,7 +55,7 @@ class MainTab extends Vue {
     if (selectedTags.length && items && items.length) {
       return items.filter(post => {
         const result = post.tags.filter(tag => {
-          return selectedTags.some(item => tag === item);
+          return selectedTags.some(item => tag === item.text);
         });
         return !!result.length;
       });

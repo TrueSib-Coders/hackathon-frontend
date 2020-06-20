@@ -46,7 +46,15 @@ v-app.app
 
     v-btn.app__btn(
       to="/create"
-      v-if="authorized"
+      v-if="authorized && !isMobile"
+      light
+      color="warning"
+    ) Предложить идею
+      // v-icon mdi-text-box-plus-outline
+
+    v-btn.app__btn(
+      to="/create"
+      v-if="authorized && isMobile"
       light
       color="warning"
       fab
@@ -66,6 +74,7 @@ v-app.app
 <script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import checkMobile from '@/mixins';
 
 import { Alert, Logo } from '@/components';
 
@@ -75,11 +84,16 @@ export default
     Alert,
     Logo,
   },
+  mixins: [checkMobile],
 })
 class App extends Vue {
   drawer = false;
 
   departaments = [];
+
+  get isMobile() {
+    return this.checkMobile.mobile;
+  }
 
   get authorized() {
     const result = this.$store.state.auth;

@@ -20,6 +20,9 @@ const Profile = () =>
 const MainTab = () =>
   import('../views/maintab/MainTab.vue' /* webpackChunkName: "login" */);
 
+const CreatePost = () =>
+  import('../views/new/New.vue' /* webpackChunkName: "login" */);
+
 const routes = [
   {
     path: '/login',
@@ -60,10 +63,20 @@ const routes = [
     meta: { name: 'Новости', requiresAuth: true },
   },
   {
+    path: '/create',
+    name: 'createPost',
+    component: CreatePost,
+    meta: { name: 'Предлоэить новую идею', requiresAuth: true },
+  },
+  {
     path: '/profile',
     name: 'profile',
     component: Profile,
     meta: { name: 'Профиль', requiresAuth: true },
+  },
+  {
+    path: '*',
+    redirect: '/',
   },
 ];
 

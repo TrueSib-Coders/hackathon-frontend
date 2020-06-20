@@ -4,7 +4,6 @@
     v-for="item, index in items"
     :key="index"
     :big="index === 0"
-    :isMobile="isMobile"
     :id="item.id"
     :title="item.title"
     :text="item.text"

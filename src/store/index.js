@@ -11,7 +11,7 @@ const BASE_URL = 'http://192.168.1.6:3029/api/v1';
 
 export default new Vuex.Store({
   state: {
-    auth: true,
+    auth: false,
     alert: {
       show: false,
       type: 'info',
@@ -24,6 +24,8 @@ export default new Vuex.Store({
     },
     user: {},
     loading: false,
+    loadingTags: false,
+    tags: [],
   },
   mutations: {
     setAuthStatus(state, status) {
@@ -45,12 +47,18 @@ export default new Vuex.Store({
     setLoading(state, status) {
       state.loading = status;
     },
+    setLoadingTags(state, status) {
+      state.loadingTags = status;
+    },
+    setTags(state, tags) {
+      state.tags = tags;
+    },
   },
   actions: {
     removeAlert({ commit }) {
       commit('removeAlert');
     },
-    login({ commit }, user) {
+    login({ commit, dispatch }, user) {
       return new Promise(function(resolve, reject) {
         commit('setLoading', true);
         axios
@@ -62,7 +70,9 @@ export default new Vuex.Store({
               commit('setAuthStatus', true);
               commit('setUser', data.customer);
               commit('setLoading', false);
-              resolve(data);
+              dispatch('loadTags').then(() => {
+                resolve(data);
+              });
             } else {
               commit('setAlert', {
                 text: 'Неверные данные входа',
@@ -85,6 +95,13 @@ export default new Vuex.Store({
         localStorage.removeItem('token');
         resolve();
       });
+    },
+    init() {
+      const list = [
+        this.dispatch('loadPosts', 'popular'),
+        this.dispatch('loadTags'),
+      ];
+      return Promise.all(list);
     },
     loadPosts({ commit }, query) {
       return new Promise(function(resolve, reject) {
@@ -109,6 +126,33 @@ export default new Vuex.Store({
           .catch(e => {
             commit('setAlert', { text: 'Ошибка подключения', type: 'error' });
             commit('setLoading', false);
+            reject(new Error(e));
+          });
+      });
+    },
+    loadTags({ commit }, query) {
+      return new Promise(function(resolve, reject) {
+        commit('setLoadingTags', true);
+        axios
+          .get(`${BASE_URL}/customer/categories`)
+          .then(response => {
+            if (response.status === 200) {
+              const { data } = response.data;
+              commit('setTags', data);
+              commit('setLoadingTags', false);
+              resolve(data);
+            } else {
+              commit('setAlert', {
+                text: 'Ошибка подключения',
+                type: 'error',
+              });
+              commit('setLoadingTags', false);
+              reject(new Error('Ошибка подключения'));
+            }
+          })
+          .catch(e => {
+            commit('setAlert', { text: 'Ошибка подключения', type: 'error' });
+            commit('setLoadingTags', false);
             reject(new Error(e));
           });
       });

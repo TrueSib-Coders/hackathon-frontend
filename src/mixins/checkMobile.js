@@ -24,8 +24,8 @@ const mixin = {
         windowWidth: width,
         any: isMobile.any,
         mobile: isMobile.phone || width <= MOBILE_MAX,
-        phablet: width > MOBILE_MAX && width <= PHABLET_MAX,
-        tablet: isMobile.tablet || (width > PHABLET_MAX && width <= TABLET_MAX),
+        phablet: isMobile.tablet || width <= PHABLET_MAX,
+        tablet: isMobile.tablet || width <= TABLET_MAX,
         desktop: !isMobile.any && width > TABLET_MAX,
       };
     },

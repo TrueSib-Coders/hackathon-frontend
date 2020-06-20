@@ -19,29 +19,34 @@
       v-model="searchTags"
       label="Введите тег"
     )
-    v-list.main__tags(
-      :class="{ 'main__tags_mobile': isMobile }"
-      dense
+    v-skeleton-loader.main__sidebar(
+      :loading="loading"
+      height="94"
+      type="list-item-five-line"
     )
-      v-list-item.main__tag(
-        v-for="item, index in filteredTags"
-        :class="{ 'main__tag_mobile': isMobile }"
-        :key="index"
+      v-list.main__tags(
+        :class="{ 'main__tags_mobile': isMobile }"
+        dense
       )
-        v-checkbox.main__tagitem(
-          v-model="selectedTags"
-          :label="item"
-          :value="item"
+        v-list-item.main__tag(
+          v-for="item, index in filteredTags"
+          :class="{ 'main__tag_mobile': isMobile }"
+          :key="item.id"
         )
-      v-alert.maintab__empty(
-        v-if="!hasTags"
-        border="bottom"
-        colored-border
-        type="warning"
-        elevation="2"
-      ) Ничего не найдено!
+          v-checkbox.main__tagitem(
+            v-model="selectedTags"
+            :label="item.text"
+            :value="item"
+          )
+        v-alert.main__empty(
+          v-if="!hasTags"
+          border="bottom"
+          colored-border
+          type="warning"
+          elevation="2"
+        ) Ничего не найдено!
     Transition
-      v-btn(
+      v-btn.main__btn(
         v-if="canClear"
         color="error"
         block
@@ -88,34 +93,39 @@ class Main extends Vue {
 
   selectedTags = [];
 
-  tags = [
-    'Разработка',
-    'Лекции',
-    'Еда',
-    'Автомобили',
-    'Отдых',
-    'Путешествия',
-    'Сотрудники',
-  ];
+  get tags() {
+    return this.$store.state.tags;
+  }
 
   get isMobile() {
     return this.checkMobile.mobile;
+  }
+
+  get isTablet() {
+    return this.checkMobile.phablet;
   }
 
   get isDesktop() {
     return !this.isMobile;
   }
 
+  get flatTags() {
+    return this.tags.reduce((all, item) => {
+      all.push(...item.data);
+      return all;
+    }, []);
+  }
+
   get filteredTags() {
-    const { tags, searchTags } = this;
+    const { searchTags, flatTags } = this;
     if (searchTags) {
-      return tags.filter(item => {
-        const tag = item.toLowerCase();
+      return flatTags.filter(item => {
+        const tag = item.text.toLowerCase();
         const search = searchTags.toLowerCase();
         return tag.includes(search);
       });
     }
-    return tags;
+    return flatTags;
   }
 
   get hasTags() {
@@ -127,6 +137,10 @@ class Main extends Vue {
     return searchTags || selectedTags.length;
   }
 
+  get loading() {
+    return this.$store.state.loadingTags;
+  }
+
   clear() {
     this.selectedTags = [];
     this.searchTags = '';
@@ -136,8 +150,8 @@ class Main extends Vue {
 
 <style lang="stylus" scoped>
 .main
-  padding-right: 216px
-  max-width: 1100px
+  padding-right: 286px
+  max-width: 1400px
   margin: 0 auto
 
   &_mobile
@@ -155,7 +169,7 @@ class Main extends Vue {
       top: 66px
       z-index: 2
       height: 100%
-      width: 200px
+      width: 270px
       border-top: none
       border-right: none
       border-bottom: none
@@ -178,4 +192,12 @@ class Main extends Vue {
 
   &__empty
     line-height: 1.2
+    width: 100%
+
+  &__sidebar
+    max-height: 600px
+    overflow: auto
+
+  &__btn
+    margin-top: 16px
 </style>

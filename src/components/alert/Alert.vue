@@ -40,6 +40,7 @@ class Alert extends Vue {
   right: 0
   margin: 20px
   width: auto
+  z-index: 20
   min-width: 200px
   max-width: 500px
 </style>

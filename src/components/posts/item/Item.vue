@@ -11,8 +11,6 @@
         :class="{ 'item__image_small' : small }"
         class="white--text align-end"
         :src="image"
-        :max-height="small ? 'auto' : '400px'"
-        :max-width="small ? '300px' : 'auto'"
       )
         v-card-title.item__title(v-if="!small") {{ title }}
     .item__content
@@ -46,13 +44,13 @@
         v-spacer
         v-btn(
           color="success"
-          :text="vote !== (true || null)"
+          :text="!(vote === true)"
         )
           v-icon mdi-chevron-up
         .item__rating {{ rating }}
         v-btn(
           color="error"
-          :text="vote !== (false || null)"
+          :text="!(vote === false)"
         )
           v-icon mdi-chevron-down
 </template>
@@ -60,15 +58,13 @@
 <script>
 import Vue from 'vue';
 import Component from 'vue-class-component';
+import checkMobile from '@/mixins';
 
 export default
 @Component({
+  mixins: [checkMobile],
   props: {
     big: {
-      type: Boolean,
-      default: false,
-    },
-    isMobile: {
       type: Boolean,
       default: false,
     },
@@ -120,8 +116,16 @@ export default
 })
 class Item extends Vue {
   get small() {
-    const { big, isMobile } = this;
-    return !(big || isMobile);
+    const { big, isTablet } = this;
+    return !(big || isTablet);
+  }
+
+  get isMobile() {
+    return this.checkMobile.mobile;
+  }
+
+  get isTablet() {
+    return this.checkMobile.tablet;
   }
 }
 </script>
@@ -139,6 +143,8 @@ class Item extends Vue {
 
   &__image
     position: relative
+    max-height: 300px
+    max-width: none
 
     &:before
       content: ''
@@ -149,6 +155,10 @@ class Item extends Vue {
       height: 100%
       z-index: 1
       background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.3) 60%, rgba(0,0,0,0.9) 100%)
+
+    &_small
+      max-height: none
+      max-width: 400px
 
   &__title
     font-family: "Proxima Bold"
