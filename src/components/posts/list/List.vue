@@ -12,9 +12,10 @@
     :vote="item.vote"
     :comments="item.comments"
     :author="item.author"
-    :authorLink="item.authorLink"
+    :authorId="item.authorId"
     :date="item.date"
     :tags="item.tags"
+    @selectTag="selectTag"
   )
 </template>
 
@@ -40,7 +41,11 @@ export default
     },
   },
 })
-class List extends Vue {}
+class List extends Vue {
+  selectTag(tag) {
+    this.$emit('selectTag', tag);
+  }
+}
 </script>
 
 <style lang="stylus" scoped></style>

@@ -127,6 +127,10 @@ class Item extends Vue {
   get isTablet() {
     return this.checkMobile.tablet;
   }
+
+  selectTag(tag) {
+    this.$emit('selectTag', tag);
+  }
 }
 </script>
 
@@ -136,7 +140,7 @@ class Item extends Vue {
 
   &_small
     display: flex
-    max-height: 210px
+    max-height: 250px
 
   &__card
     overflow: hidden

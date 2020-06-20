@@ -9,6 +9,7 @@
       v-if="hasItems"
       :items="filteredItems"
       :isMobile="isMobile"
+      @selectTag="selectTag"
     )
     v-alert.maintab__empty(
       v-else
@@ -55,7 +56,7 @@ class MainTab extends Vue {
     if (selectedTags.length && items && items.length) {
       return items.filter(post => {
         const result = post.tags.filter(tag => {
-          return selectedTags.some(item => tag === item.text);
+          return selectedTags.some(item => tag.text === item.text);
         });
         return !!result.length;
       });
@@ -73,6 +74,10 @@ class MainTab extends Vue {
 
   mounted() {
     if (!this.items) this.$store.dispatch('loadPosts', this.name);
+  }
+
+  selectTag(tag) {
+    this.$emit('selectTag', tag);
   }
 }
 </script>

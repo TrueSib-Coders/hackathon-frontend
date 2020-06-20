@@ -59,16 +59,19 @@
       router-view(
         :selectedTags="selectedTags"
         :isMobile="isMobile"
+        @selectTag="selectTag"
       )
     v-tab-item(id="discussed")
       router-view(
         :selectedTags="selectedTags"
         :isMobile="isMobile"
+        @selectTag="selectTag"
       )
     v-tab-item(id="new")
       router-view(
         :selectedTags="selectedTags"
         :isMobile="isMobile"
+        @selectTag="selectTag"
       )
 </template>
 
@@ -144,6 +147,10 @@ class Main extends Vue {
   clear() {
     this.selectedTags = [];
     this.searchTags = '';
+  }
+
+  selectTag(tag) {
+    this.selectedTags.push(tag);
   }
 }
 </script>
