@@ -17,6 +17,12 @@ v-app.app
             v-icon mdi-newspaper-variant
           v-list-item-content
             v-list-item-title Новости
+      router-link.app__link(to="/top")
+        v-list-item(link)
+          v-list-item-action
+            v-icon mdi-trophy-variant
+          v-list-item-content
+            v-list-item-title Топ пользователей
       router-link.app__link(to="/profile")
         v-list-item(link)
           v-list-item-action

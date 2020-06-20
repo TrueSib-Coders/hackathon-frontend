@@ -9,19 +9,21 @@ const Login = () =>
   import('../views/login/Login.vue' /* webpackChunkName: "login" */);
 
 const Main = () =>
-  import('../views/main/Main.vue' /* webpackChunkName: "login" */);
+  import('../views/main/Main.vue' /* webpackChunkName: "main" */);
 
 const News = () =>
-  import('../views/news/News.vue' /* webpackChunkName: "login" */);
+  import('../views/news/News.vue' /* webpackChunkName: "news" */);
 
 const Profile = () =>
-  import('../views/profile/Profile.vue' /* webpackChunkName: "login" */);
+  import('../views/profile/Profile.vue' /* webpackChunkName: "profile" */);
+
+const Top = () => import('../views/top/Top.vue' /* webpackChunkName: "top" */);
 
 const MainTab = () =>
-  import('../views/maintab/MainTab.vue' /* webpackChunkName: "login" */);
+  import('../views/maintab/MainTab.vue' /* webpackChunkName: "tab" */);
 
 const CreatePost = () =>
-  import('../views/new/New.vue' /* webpackChunkName: "login" */);
+  import('../views/new/New.vue' /* webpackChunkName: "create" */);
 
 const routes = [
   {
@@ -61,6 +63,12 @@ const routes = [
     name: 'news',
     component: News,
     meta: { name: 'Новости', requiresAuth: true },
+  },
+  {
+    path: '/top',
+    name: 'top',
+    component: News,
+    meta: { name: 'Топ пользователей', requiresAuth: true },
   },
   {
     path: '/create',

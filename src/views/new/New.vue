@@ -16,10 +16,11 @@
         required
       )
       v-select(
-        v-model="tags"
+        v-model="selectedTags"
         multiple
+        :items="flatTags"
         :rules="rules.tags"
-        label="Название"
+        label="Теги"
         required
       )
       v-btn.login__btn(
@@ -27,7 +28,7 @@
         block
         :disabled="!valid"
         @click="submit"
-      ) Войти
+      ) Создать
 </template>
 
 <script>
@@ -42,17 +43,23 @@ class NewPost extends Vue {
   valid = false;
   title = '';
   text = '';
+  selectedTags = [];
 
   rules = {
     title: [v => !!v || 'Поле не может быть пустым'],
     text: [v => !!v || 'Поле не может быть пустым'],
-    tags: [
-      v => (v.length < 4 && v.length > 0) || 'Выберите не более трех тегов',
-    ],
+    tags: [v => (v.length < 4 && v.length > 0) || 'Выберите от 1 до 3 тегов'],
   };
 
   get tags() {
     return this.$store.state.tags;
+  }
+
+  get flatTags() {
+    return this.tags.reduce((all, item) => {
+      all.push(...item.data);
+      return all;
+    }, []);
   }
 
   submit() {
@@ -73,6 +80,7 @@ class NewPost extends Vue {
 
   &__form
     width: 100%
+    max-width: 600px
     padding: 20px
     margin: auto
     display: flex
