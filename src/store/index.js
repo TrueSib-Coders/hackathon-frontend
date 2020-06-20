@@ -13,6 +13,11 @@ export default new Vuex.Store({
       type: 'info',
       text: 'Уведомление',
     },
+    items: {
+      popular: null,
+      new: null,
+      discussed: null,
+    },
   },
   mutations: {
     setAuthStatus(state, status) {
@@ -23,6 +28,10 @@ export default new Vuex.Store({
     },
     removeAlert(state) {
       state.alert = { show: false, text: '', type: 'info' };
+    },
+    setItems(state, data) {
+      const { items, query } = data;
+      state.items[query] = items;
     },
   },
   actions: {
@@ -57,12 +66,18 @@ export default new Vuex.Store({
         resolve();
       });
     },
-    logout({ commit }, user) {
+    logout({ commit }) {
       return new Promise(function(resolve, reject) {
         commit('setAuthStatus', false);
         resolve();
       });
     },
+    loadPosts({ commit }, query) {
+      return new Promise(function(resolve, reject) {
+        const items = [];
+        commit('setItems', { query, items });
+        resolve();
+      });
+    },
   },
-  modules: {},
 });

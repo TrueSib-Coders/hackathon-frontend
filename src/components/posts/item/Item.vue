@@ -8,7 +8,7 @@ import Component from 'vue-class-component';
 
 export default
 @Component({})
-class News extends Vue {}
+class Item extends Vue {}
 </script>
 
 <style lang="stylus" scoped></style>

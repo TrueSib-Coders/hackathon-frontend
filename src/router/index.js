@@ -5,41 +5,64 @@ import Store from '../store';
 
 Vue.use(VueRouter);
 
-const ViewLogin = () =>
+const Login = () =>
   import('../views/login/Login.vue' /* webpackChunkName: "login" */);
 
-const ViewMain = () =>
+const Main = () =>
   import('../views/main/Main.vue' /* webpackChunkName: "login" */);
 
-const ViewNews = () =>
+const News = () =>
   import('../views/news/News.vue' /* webpackChunkName: "login" */);
 
-const ViewProfile = () =>
+const Profile = () =>
   import('../views/profile/Profile.vue' /* webpackChunkName: "login" */);
+
+const MainTab = () =>
+  import('../views/maintab/MainTab.vue' /* webpackChunkName: "login" */);
 
 const routes = [
   {
     path: '/login',
     name: 'login',
-    component: ViewLogin,
+    component: Login,
     meta: { name: 'Вход' },
   },
   {
     path: '/',
-    name: 'main',
-    component: ViewMain,
+    component: Main,
+    redirect: 'popular',
     meta: { name: 'Главная', requiresAuth: true },
+    children: [
+      {
+        path: '/popular',
+        name: 'popular',
+        component: MainTab,
+        meta: { name: 'Популярное', requiresAuth: true, tabName: 'popular' },
+      },
+      {
+        path: '/discussed',
+        name: 'discussed',
+        component: MainTab,
+        meta: { name: 'Обсуждаемое', requiresAuth: true, tabName: 'discussed' },
+      },
+      {
+        path: '/new',
+        name: 'new',
+        component: MainTab,
+        meta: { name: 'Новое', requiresAuth: true, tabName: 'new' },
+      },
+    ],
   },
   {
     path: '/news',
     name: 'news',
-    component: ViewNews,
+    component: News,
     meta: { name: 'Новости', requiresAuth: true },
   },
   {
     path: '/profile',
     name: 'profile',
-    component: ViewProfile,
+    component: Profile,
     meta: { name: 'Профиль', requiresAuth: true },
   },
   {

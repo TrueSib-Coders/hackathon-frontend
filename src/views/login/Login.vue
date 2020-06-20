@@ -36,7 +36,7 @@ export default
     Logo,
   },
 })
-class ViewLogin extends Vue {
+class Login extends Vue {
   valid = false;
   login = '';
   pass = '';
