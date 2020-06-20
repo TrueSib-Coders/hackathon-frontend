@@ -23,6 +23,8 @@ export default new Vuex.Store({
       discussed: null,
     },
     user: {},
+    life: [],
+    icons: [],
     loading: false,
     loadingTags: false,
     tags: [],
@@ -52,6 +54,12 @@ export default new Vuex.Store({
     },
     setTags(state, tags) {
       state.tags = tags;
+    },
+    setIcons(state, data) {
+      state.icons = data;
+    },
+    setLife(state, data) {
+      state.life = data;
     },
   },
   actions: {
@@ -153,6 +161,35 @@ export default new Vuex.Store({
           .catch(e => {
             commit('setAlert', { text: 'Ошибка подключения', type: 'error' });
             commit('setLoadingTags', false);
+            reject(new Error(e));
+          });
+      });
+    },
+    loadProfile({ commit }, query) {
+      return new Promise(function(resolve, reject) {
+        commit('setLoading', true);
+        axios
+          .get(`${BASE_URL}/customer/profile/life`)
+          .then(response => {
+            if (response.status === 200) {
+              const { data } = response.data;
+              const { life, icons } = data;
+              commit('setLife', life);
+              commit('setIcons', icons);
+              commit('setLoading', false);
+              resolve(data);
+            } else {
+              commit('setAlert', {
+                text: 'Ошибка подключения',
+                type: 'error',
+              });
+              commit('setLoading', false);
+              reject(new Error('Ошибка подключения'));
+            }
+          })
+          .catch(e => {
+            commit('setAlert', { text: 'Ошибка подключения', type: 'error' });
+            commit('setLoading', false);
             reject(new Error(e));
           });
       });

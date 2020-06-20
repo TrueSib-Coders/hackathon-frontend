@@ -136,4 +136,7 @@ a
 
   &__btn
     z-index: 15
+
+.v-toolbar__title
+  padding-left: 0 !important
 </style>

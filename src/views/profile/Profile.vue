@@ -26,7 +26,32 @@
         :title="ach.title"
         :subtitle="ach.subtitle"
       )
-  .profile__content хз что тут
+  .profile__content(
+    :class="{ 'profile__content_mobile': isMobile }"
+  )
+    .profile__icons
+      h1.profile__subtitle Личный прогресс
+      .profile__icons-list
+        v-card.profile__icons-item(
+          v-for="item, index in icons"
+          :key="index"
+        )
+          v-icon.profile__icons-icon(color="primary" large) {{ item.icon }}
+          h2.profile__icons-count {{ item.count }}
+          p.profile__icons-title {{ item.title }}
+          hr.profile__icons-hr
+          p.profile__icons-description(color="secondary") {{ item.description }}
+    .profile__life
+      h1.profile__subtitle Последняя активность
+      .profile__life-list
+        router-link(
+          v-for="item, index in life"
+          :key="index"
+          :to="item.id"
+        )
+          v-card.profile__life-item
+            v-icon.profile__life-icon(color="primary" large) {{ item.icon }}
+            p.profile__life-title(color="secondary") {{ item.title }}
 </template>
 
 <script>
@@ -68,9 +93,21 @@ class Profile extends Vue {
     },
   ];
 
+  get loading() {
+    return this.$store.state.loading;
+  }
+
   get fio() {
     const { name, surname, patronymic } = this.$store.state.user;
     return `${surname} ${name} ${patronymic}`;
+  }
+
+  get life() {
+    return this.$store.state.life;
+  }
+
+  get icons() {
+    return this.$store.state.icons;
   }
 
   get department() {
@@ -85,6 +122,10 @@ class Profile extends Vue {
 
   get isMobile() {
     return this.checkMobile.phablet || this.checkMobile.mobile;
+  }
+
+  mounted() {
+    this.$store.dispatch('loadProfile');
   }
 }
 </script>
@@ -110,10 +151,11 @@ img
 
     &_mobile
       flex-direction: column
-      height: 380px
+      height: auto
 
       >>> .profile__achs
         justify-content: center
+        margin-top: 16px
 
   &__image
     @extends $flexCenter
@@ -145,4 +187,68 @@ img
 
   &__achs
     display: flex
+    flex-wrap: wrap
+
+  &__content
+    display: flex
+    padding: 20px
+
+    &_mobile
+      flex-direction: column
+
+      >>> .profile__icons, .profile__life
+        max-width: 100%
+        margin: 0
+        margin-bottom: 40px
+
+      >>> .profile__icons-list
+        margin-right: 0
+
+      >>> .profile__life-list
+        width: 100%
+
+  &__subtitle
+    margin-bottom: 16px
+
+  &__icons
+    flex-grow: 5
+    max-width: 60%
+    margin-right: 40px
+    &-list
+      display: flex
+      flex-wrap: wrap
+      margin: -8px
+    &-item
+      flex-grow: 1
+      flex-basis: 30%
+      margin: 8px
+      padding: 12px
+      text-align: center;
+    &-icon
+      border: 1px solid #0057B6
+      padding: 12px
+      border-radius: 4px
+      margin-bottom: 8px
+    &-count
+      font-size: 1.5em
+      font-family: 'Proxima Bold'
+    &-description
+      font-size: 0.8em
+      margin-bottom: 0
+
+  &__life
+    flex-grow: 3
+    max-width: 40%
+
+    &-item
+      display: flex
+      padding: 8px
+      margin-bottom: 16px
+
+    &-title
+      margin-left: 8px
+      margin-bottom: 0
+
+    &-icon
+      padding: 8px
 </style>
