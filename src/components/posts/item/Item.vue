@@ -23,7 +23,7 @@
         :class="{ 'item__subtitle_small' : small }"
         class="pb-0"
       )
-        router-link(:to="authorLink") {{ author }}
+        router-link(:to="authorId") {{ author }}
       v-card-text.item__text(
         :class="{ 'item__text_small' : small }"
         class="text--primary"
@@ -40,7 +40,7 @@
             color="accent"
             small
             @click="selectTag(tag)"
-          ) {{ tag }}
+          ) {{ tag.text }}
         v-spacer
         v-btn(
           color="success"
@@ -88,7 +88,7 @@ export default
       type: String,
       default: '',
     },
-    authorLink: {
+    authorId: {
       type: String,
       default: '',
     },
