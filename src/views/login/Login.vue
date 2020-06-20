@@ -67,6 +67,7 @@ class Login extends Vue {
   align-items: center
   justify-content: center
   height: 100%
+  position: relative
 
   &__form
     width: 100%

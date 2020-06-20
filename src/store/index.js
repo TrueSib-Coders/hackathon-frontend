@@ -28,6 +28,7 @@ export default new Vuex.Store({
     loading: false,
     loadingTags: false,
     tags: [],
+    news: [],
   },
   mutations: {
     setAuthStatus(state, status) {
@@ -60,6 +61,9 @@ export default new Vuex.Store({
     },
     setLife(state, data) {
       state.life = data;
+    },
+    setNews(state, data) {
+      state.news = data;
     },
   },
   actions: {
@@ -161,6 +165,33 @@ export default new Vuex.Store({
           .catch(e => {
             commit('setAlert', { text: 'Ошибка подключения', type: 'error' });
             commit('setLoadingTags', false);
+            reject(new Error(e));
+          });
+      });
+    },
+    loadNews({ commit }) {
+      return new Promise(function(resolve, reject) {
+        commit('setLoading', true);
+        axios
+          .get(`${BASE_URL}/customer/news`)
+          .then(response => {
+            if (response.status === 200) {
+              const { data } = response.data;
+              commit('setNews', data);
+              commit('setLoading', false);
+              resolve(data);
+            } else {
+              commit('setAlert', {
+                text: 'Ошибка подключения',
+                type: 'error',
+              });
+              commit('setLoading', false);
+              reject(new Error('Ошибка подключения'));
+            }
+          })
+          .catch(e => {
+            commit('setAlert', { text: 'Ошибка подключения', type: 'error' });
+            commit('setLoading', false);
             reject(new Error(e));
           });
       });

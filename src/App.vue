@@ -67,7 +67,13 @@ v-app.app
       small
     )
       v-icon mdi-text-box-plus-outline
-  v-main
+  v-main.relative
+    img.bg-left(
+      src="@/assets/img/bg1.png"
+    )
+    img.bg-right(
+      src="@/assets/img/bg2.png"
+    )
     router-view.app__content
   v-footer(
     color="accent"
@@ -145,4 +151,20 @@ a
 
 .v-toolbar__title
   padding-left: 0 !important
+
+
+.bg-left
+  position: fixed
+  top: 0
+  left: 0
+  opacity: 0.2
+
+.bg-right
+  position: fixed
+  bottom: 0
+  right: 0
+  opacity: 0.1
+
+.relative
+  position: relative
 </style>

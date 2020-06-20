@@ -161,10 +161,14 @@ class Main extends Vue {
   max-width: 1400px
   margin: 0 auto
 
+  &__list
+    border-radius: 4px
+
   &_mobile
     padding-right: 16px
 
   &__tagscard
+    background: #fff
     width: 100%
     position: static
     padding: 12px
@@ -207,4 +211,7 @@ class Main extends Vue {
 
   &__btn
     margin-top: 16px
+
+.theme--light.v-tabs > .v-tabs-bar, .theme--light.v-tabs-items
+  background: transparent !important
 </style>
