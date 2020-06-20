@@ -1,5 +1,11 @@
 module.exports = {
-  transpileDependencies: [
-    'vuetify'
-  ]
-}
+  transpileDependencies: ['vuetify'],
+  chainWebpack: config => {
+    config.plugin('VuetifyLoaderPlugin').tap(args => [
+      {
+        progressiveImages: true,
+        sharp: true,
+      },
+    ]);
+  },
+};

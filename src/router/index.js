@@ -65,10 +65,6 @@ const routes = [
     component: Profile,
     meta: { name: 'Профиль', requiresAuth: true },
   },
-  {
-    path: '*',
-    redirect: '/login',
-  },
 ];
 
 const router = new VueRouter({

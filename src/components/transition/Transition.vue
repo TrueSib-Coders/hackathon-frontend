@@ -7,8 +7,8 @@
 
 <script>
 export default {
-  name: 'transition-fade'
-}
+  name: 'transition-fade',
+};
 </script>
 
 <style scoped lang="stylus">

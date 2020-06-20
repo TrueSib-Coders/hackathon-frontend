@@ -1,4 +1,4 @@
 import Post from './item';
-import PostList from './list';
+import PostsList from './list';
 
-export { Post, PostList };
+export { Post, PostsList };

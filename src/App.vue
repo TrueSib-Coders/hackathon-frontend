@@ -89,6 +89,9 @@ class App extends Vue {
 *
   font-family: "Proxima"
 
+a
+  text-decoration: none
+
 .app
   &__link
     width: 100%

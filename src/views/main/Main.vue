@@ -15,35 +15,56 @@
     outlined
     tile
   )
+    v-text-field(
+      v-model="searchTags"
+      label="Введите тег"
+    )
     v-list.main__tags(
       :class="{ 'main__tags_mobile': isMobile }"
       dense
     )
       v-list-item.main__tag(
-        v-for="item, index in tags"
+        v-for="item, index in filteredTags"
         :class="{ 'main__tag_mobile': isMobile }"
         :key="index"
       )
         v-checkbox.main__tagitem(
           v-model="selectedTags"
-          :label="item.text"
-          :value="item.id"
+          :label="item"
+          :value="item"
         )
+      v-alert.maintab__empty(
+        v-if="!hasTags"
+        border="bottom"
+        colored-border
+        type="warning"
+        elevation="2"
+      ) Ничего не найдено!
     Transition
       v-btn(
-        v-if="selectedTags.length"
+        v-if="canClear"
         color="error"
         block
         outlined
+        tile
         @click="clear"
       ) Сброс
   v-tabs-items.main__content(id="popular" v-model="activeTab")
     v-tab-item(id="popular")
-      router-view
+      router-view(
+        :selectedTags="selectedTags"
+        :isMobile="isMobile"
+      )
     v-tab-item(id="discussed")
-      router-view
+      router-view(
+        :selectedTags="selectedTags"
+        :isMobile="isMobile"
+      )
     v-tab-item(id="new")
-      router-view
+      router-view(
+        :selectedTags="selectedTags"
+        :isMobile="isMobile"
+      )
 </template>
 
 <script>
@@ -63,37 +84,18 @@ export default
 class Main extends Vue {
   activeTab = 'popular';
 
+  searchTags = '';
+
   selectedTags = [];
 
   tags = [
-    {
-      id: 0,
-      text: 'Разработка',
-    },
-    {
-      id: 1,
-      text: 'Лекции',
-    },
-    {
-      id: 2,
-      text: 'Еда',
-    },
-    {
-      id: 3,
-      text: 'Автомобили',
-    },
-    {
-      id: 4,
-      text: 'Отдых',
-    },
-    {
-      id: 5,
-      text: 'Путешествия',
-    },
-    {
-      id: 6,
-      text: 'Сотрудники',
-    },
+    'Разработка',
+    'Лекции',
+    'Еда',
+    'Автомобили',
+    'Отдых',
+    'Путешествия',
+    'Сотрудники',
   ];
 
   get isMobile() {
@@ -104,8 +106,30 @@ class Main extends Vue {
     return !this.isMobile;
   }
 
+  get filteredTags() {
+    const { tags, searchTags } = this;
+    if (searchTags) {
+      return tags.filter(item => {
+        const tag = item.toLowerCase();
+        const search = searchTags.toLowerCase();
+        return tag.includes(search);
+      });
+    }
+    return tags;
+  }
+
+  get hasTags() {
+    return !!this.filteredTags.length;
+  }
+
+  get canClear() {
+    const { selectedTags, searchTags } = this;
+    return searchTags || selectedTags.length;
+  }
+
   clear() {
     this.selectedTags = [];
+    this.searchTags = '';
   }
 }
 </script>
@@ -113,6 +137,9 @@ class Main extends Vue {
 <style lang="stylus" scoped>
 .main
   padding-right: 216px
+  max-width: 1100px
+  margin: 0 auto
+
   &_mobile
     padding-right: 16px
 
@@ -123,9 +150,9 @@ class Main extends Vue {
 
     &_desktop
       padding: 0 16px
-      position: absolute
+      position: fixed
       right: 0
-      top: 0
+      top: 66px
       z-index: 2
       height: 100%
       width: 200px
@@ -148,4 +175,7 @@ class Main extends Vue {
 
   &__tagitem
     width: 100%
+
+  &__empty
+    line-height: 1.2
 </style>

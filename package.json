@@ -13,6 +13,7 @@
     "ismobilejs": "^1.1.1",
     "pug": "^3.0.0",
     "pug-plain-loader": "^1.0.0",
+    "sharp": "^0.25.4",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
     "vue-property-decorator": "^9.0.0",
@@ -40,6 +41,6 @@
     "stylus-loader": "^3.0.2",
     "vue-cli-plugin-vuetify": "~2.0.5",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.3.0"
+    "vuetify-loader": "^1.5.0"
   }
 }
