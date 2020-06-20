@@ -11,6 +11,7 @@
     :image="item.image"
     :rating="item.rating"
     :vote="item.vote"
+    :comments="item.comments"
     :author="item.author"
     :authorLink="item.authorLink"
     :date="item.date"

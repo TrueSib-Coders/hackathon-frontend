@@ -42,11 +42,21 @@ v-app.app
     )
     v-toolbar-title
       Logo(color="white")
+    v-spacer
 
+    v-btn.app__btn(
+      to="/create"
+      v-if="authorized"
+      light
+      color="warning"
+      fab
+      small
+    )
+      v-icon mdi-text-box-plus-outline
   v-main
     router-view.app__content
   v-footer(
-    color="secondary"
+    color="accent"
     app
   )
     span(class="white--text") TrueSib Coders &copy; 2020
@@ -68,6 +78,8 @@ export default
 })
 class App extends Vue {
   drawer = false;
+
+  departaments = [];
 
   get authorized() {
     const result = this.$store.state.auth;
@@ -107,4 +119,7 @@ a
 
   &__content
     padding: 16px
+
+  &__btn
+    z-index: 15
 </style>

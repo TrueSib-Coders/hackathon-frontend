@@ -4,15 +4,15 @@
     Logo
     v-form(v-model="valid")
       v-text-field(
-        v-model="login"
-        :rules="rules.login"
+        v-model="username"
+        :rules="rules.username"
         label="Имя пользователя"
         required
       )
       v-text-field(
-        v-model="pass"
+        v-model="password"
         type="password"
-        :rules="rules.pass"
+        :rules="rules.password"
         label="Пароль"
         required
       )
@@ -38,20 +38,20 @@ export default
 })
 class Login extends Vue {
   valid = false;
-  login = '';
-  pass = '';
+  username = '';
+  password = '';
 
   rules = {
-    login: [v => !!v || 'Поле не может быть пустым'],
-    pass: [
+    username: [v => !!v || 'Поле не может быть пустым'],
+    password: [
       v => !!v || 'Поле не может быть пустым',
       v => v.length >= 6 || 'Минимальная длина пароля - 6 символов',
     ],
   };
 
   submit() {
-    const { valid, login, pass, $router, $store } = this;
-    const data = { login, pass };
+    const { valid, username, password, $router, $store } = this;
+    const data = { username, password };
     if (valid) {
       $store.dispatch('login', data).then(() => {
         $router.push('/');

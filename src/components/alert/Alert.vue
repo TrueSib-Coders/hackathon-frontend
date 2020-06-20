@@ -36,7 +36,7 @@ class Alert extends Vue {
 <style lang="stylus" scoped>
 .alert
   position: absolute
-  bottom: 0
+  bottom: 40px
   right: 0
   margin: 20px
   width: auto

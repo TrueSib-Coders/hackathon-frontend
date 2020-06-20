@@ -1,17 +1,22 @@
 <template lang="pug">
 .maintab
-  PostsList.maintab__content(
-    v-if="hasItems"
-    :items="filteredItems"
-    :isMobile="isMobile"
+  v-skeleton-loader(
+    :loading="loading"
+    height="94"
+    type="list-item-two-line"
   )
-  v-alert.maintab__empty(
-    v-else
-    border="bottom"
-    colored-border
-    type="warning"
-    elevation="2"
-  ) К сожалению, в этой категории нет постов. Приходите позже или измените настройки фильтра!
+    PostsList.maintab__content(
+      v-if="hasItems"
+      :items="filteredItems"
+      :isMobile="isMobile"
+    )
+    v-alert.maintab__empty(
+      v-else
+      border="bottom"
+      colored-border
+      type="warning"
+      elevation="2"
+    ) К сожалению, в этой категории нет постов. Приходите позже или измените настройки фильтра!
 </template>
 
 <script>
@@ -58,6 +63,10 @@ class MainTab extends Vue {
       });
     }
     return items || [];
+  }
+
+  get loading() {
+    return this.$store.state.loading;
   }
 
   get name() {

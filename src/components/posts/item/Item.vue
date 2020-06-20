@@ -1,6 +1,6 @@
 <template lang="pug">
 .item
-  v-card(
+  v-card.item__card(
     :class="{ 'item_small' : small }"
     class="mx-auto"
   )
@@ -32,7 +32,9 @@
       ) {{ text }}
       v-spacer(v-if="small")
       v-card-actions.item__actions
-        .item__date(class="text--secondary") {{ date }}
+        .item__comments(class="text--secondary")
+          v-icon(small) mdi-comment-text-outline
+          | &nbsp; {{ comments }}
         .item__tags(v-if="!isMobile")
           v-chip.item__tag(
             v-for="tag, index in tags"
@@ -44,18 +46,15 @@
         v-spacer
         v-btn(
           color="success"
-          text
+          :text="vote !== (true || null)"
         )
           v-icon mdi-chevron-up
         .item__rating {{ rating }}
         v-btn(
           color="error"
-          text
+          :text="vote !== (false || null)"
         )
           v-icon mdi-chevron-down
-  .item__footer(
-    v-if="false"
-    )
 </template>
 
 <script>
@@ -99,7 +98,11 @@ export default
     },
     rating: {
       type: Number,
-      default: '',
+      default: 0,
+    },
+    comments: {
+      type: Number,
+      default: 0,
     },
     vote: {
       type: Boolean,
@@ -130,6 +133,9 @@ class Item extends Vue {
   &_small
     display: flex
     max-height: 210px
+
+  &__card
+    overflow: hidden
 
   &__image
     position: relative
@@ -177,4 +183,6 @@ class Item extends Vue {
 
   &__tag
     margin: 2px 4px 2px 0
+    >>> *
+      color: white
 </style>
