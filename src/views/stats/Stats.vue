@@ -40,6 +40,8 @@ class Stat extends Vue {
 
 <style lang="stylus" scoped>
 .stat
+  max-width: 1400px
+  margin: 0 auto
   display: grid
   grid-template-columns: 1fr 1fr 1fr
   grid-template-rows: 1fr 1fr 1fr

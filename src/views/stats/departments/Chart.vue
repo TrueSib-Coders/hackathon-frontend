@@ -1,6 +1,6 @@
 <template lang="pug">
 .chart
-  h2.chart__title Статистика отделов 
+  h2.chart__title Статистика отделов
   Chart(
     :chartData="datacollection"
     :options="options"
@@ -60,7 +60,7 @@ class DepChart extends Vue {
           stack: 1,
         },
         {
-          label: 'Рейтинг за комментарии',
+          label: 'Рейтинг за обсуждения',
           backgroundColor: colors[8],
           data: [104, 203, 68, 120, 43, 23, 167],
           stack: 1,

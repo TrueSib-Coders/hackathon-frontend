@@ -50,7 +50,9 @@ img
   flex-direction: column
   align-items: center
   text-align: center
-  width: 100px
+  min-width: 110px
+  max-width: 110px
+  width: 110px
   margin-left: 8px
 
   &__img

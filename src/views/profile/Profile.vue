@@ -154,7 +154,8 @@ img
       height: auto
 
       >>> .profile__achs
-        justify-content: center
+        overflow: auto
+        max-width: 100%
         margin-top: 16px
 
   &__image
@@ -187,7 +188,7 @@ img
 
   &__achs
     display: flex
-    flex-wrap: wrap
+    // flex-wrap: wrap
 
   &__content
     display: flex
