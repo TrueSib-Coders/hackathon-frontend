@@ -9,6 +9,9 @@ const colors = [
   '#65CC7B', // green 7
   '#F5984E', // orange 8
   '#5960EA', // violet 9
+  '#DEB900', // gold 10
+  '#B3B3B3', // silver 11
+  '#A25F0C', // bronze 12
 ];
 
 export default colors;
