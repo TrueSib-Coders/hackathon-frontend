@@ -6,7 +6,6 @@
       v-for="item, index in users"
       :key="index"
     )
-      router-link(:to="item.user")
         v-card(outlined)
           .top__user
             .top__user-award.top__user-rank(
@@ -61,6 +60,7 @@ class TopUsers extends Vue {
   &__user
     display: flex
     align-items: center
+    cursor: pointer;
     margin: 0 8px
     padding: 8px 0
 
