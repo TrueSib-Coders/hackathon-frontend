@@ -10,6 +10,7 @@
     :image="item.image"
     :rating="item.rating"
     :vote="item.vote"
+    :favorite="item.favorite"
     :comments="item.comments"
     :author="item.author"
     :authorId="item.authorId"

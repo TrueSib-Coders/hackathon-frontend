@@ -17,12 +17,12 @@ v-app.app
             v-icon mdi-newspaper-variant
           v-list-item-content
             v-list-item-title Новости
-      router-link.app__link(to="/top")
+      router-link.app__link(to="/top" @click.native="toTop")
         v-list-item(link)
           v-list-item-action
             v-icon mdi-trophy-variant
           v-list-item-content
-            v-list-item-title Топ пользователей
+            v-list-item-title Статистика
       router-link.app__link(to="/profile")
         v-list-item(link)
           v-list-item-action
@@ -47,7 +47,8 @@ v-app.app
       @click.stop="drawer = !drawer"
     )
     v-toolbar-title
-      Logo(color="white")
+      router-link.app__link(to="/")
+        Logo(color="white")
     v-spacer
 
     v-btn.app__btn(
@@ -113,6 +114,10 @@ class App extends Vue {
     return result;
   }
 
+  toTop() {
+    this.drawer = false;
+  }
+
   logout() {
     this.$store.dispatch('logout').then(() => {
       this.$router.push('/login');
@@ -145,13 +150,14 @@ a
 
   &__content
     padding: 16px
+    position: relative
+    z-index: 1
 
   &__btn
     z-index: 15
 
 .v-toolbar__title
   padding-left: 0 !important
-
 
 .bg-left
   position: fixed

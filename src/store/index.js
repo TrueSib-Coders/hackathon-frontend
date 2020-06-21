@@ -196,6 +196,32 @@ export default new Vuex.Store({
           });
       });
     },
+    loadTop({ commit }) {
+      return new Promise(function(resolve, reject) {
+        commit('setLoading', true);
+        axios
+          .get(`${BASE_URL}/customer/top`)
+          .then(response => {
+            if (response.status === 200) {
+              const { data } = response.data;
+              commit('setLoading', false);
+              resolve(data);
+            } else {
+              commit('setAlert', {
+                text: 'Ошибка подключения',
+                type: 'error',
+              });
+              commit('setLoading', false);
+              reject(new Error('Ошибка подключения'));
+            }
+          })
+          .catch(e => {
+            commit('setAlert', { text: 'Ошибка подключения', type: 'error' });
+            commit('setLoading', false);
+            reject(new Error(e));
+          });
+      });
+    },
     loadProfile({ commit }, query) {
       return new Promise(function(resolve, reject) {
         commit('setLoading', true);

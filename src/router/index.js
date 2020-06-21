@@ -17,7 +17,8 @@ const News = () =>
 const Profile = () =>
   import('../views/profile/Profile.vue' /* webpackChunkName: "profile" */);
 
-const Top = () => import('../views/top/Top.vue' /* webpackChunkName: "top" */);
+const Stat = () =>
+  import('../views/stats/Stats.vue' /* webpackChunkName: "top" */);
 
 const MainTab = () =>
   import('../views/maintab/MainTab.vue' /* webpackChunkName: "tab" */);
@@ -67,8 +68,8 @@ const routes = [
   {
     path: '/top',
     name: 'top',
-    component: News,
-    meta: { name: 'Топ пользователей', requiresAuth: true },
+    component: Stat,
+    meta: { name: 'Статистика', requiresAuth: true },
   },
   {
     path: '/create',

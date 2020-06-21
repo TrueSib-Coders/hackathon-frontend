@@ -13,6 +13,7 @@
         :src="image"
       )
         v-card-title.item__title(v-if="!small") {{ title }}
+        .item__favorite(v-if="favorite") Интересное!
     .item__content
       router-link(
         class="text--accent"
@@ -65,6 +66,10 @@ export default
   mixins: [checkMobile],
   props: {
     big: {
+      type: Boolean,
+      default: false,
+    },
+    favorite: {
       type: Boolean,
       default: false,
     },
@@ -199,4 +204,16 @@ class Item extends Vue {
     margin: 2px 4px 2px 0
     >>> *
       color: white
+
+  &__favorite
+    position: absolute
+    top: 10px
+    left: 10px
+    width: 120px
+    height: 30px
+    background: #f5984e
+    border-radius: 8px
+    display: flex
+    align-items: center
+    justify-content: center
 </style>
